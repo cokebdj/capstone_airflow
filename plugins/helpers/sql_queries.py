@@ -74,3 +74,8 @@ class SqlQueries:
                                 HourlyWindSpeed AS wind_speed
                                 FROM staging_weather
                                 WHERE Date IS NOT NULL""")
+
+# TODO: transform strings to timestamp
+# TODO: select maximum from weather to treat zeros (not so interested in accuracy but in detecting bad weather)
+# TODO: hourly windows for weather
+# TODO?: table with aggregations of travels by hour and weather??
