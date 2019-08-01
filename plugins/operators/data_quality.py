@@ -13,13 +13,13 @@ class DataQualityOperator(BaseOperator):
 
         super(DataQualityOperator, self).__init__(*args, **kwargs)
         self.redshift_conn_id = redshift_conn_id
-        self.tables = ['songs','users', 'artists', 'time']
+        self.tables = ['staging_weather','staging_bikes', 'rides', 'stations', 'weather']
 
     def execute(self, context):
         
         self.hook = PostgresHook(postgres_conn_id=self.redshift_conn_id)
         
-        for table in tables:
+        for table in self.tables:
             self.log.info(f'Query for table {self.table}.')
             query = f"""  SELECT COUNT(*) FROM {table};  """
             records = self.hook.get_records(query)

@@ -87,7 +87,7 @@ load_stations_dimension_table = LoadDimensionOperator(
 
 load_weather_dimension_table = LoadDimensionOperator(
     redshift_conn_id="redshift",
-    table="dimensions",
+    table="weather",
     create_query=SqlQueries.create_weather,
     insert_query=SqlQueries.weather_table_insert,
     task_id='Load_weather_dim_table',
