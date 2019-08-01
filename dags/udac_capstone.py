@@ -67,7 +67,7 @@ stage_bikes_raw_to_redshift = StageToRedshiftOperator(
 
 wait_operator = DummyOperator(task_id='waiting_until_completion',  dag=dag)
 
-load_rides_facts_table = LoadDimensionOperator(
+load_rides_facts_table = LoadFactOperator(
     redshift_conn_id="redshift",
     table="rides",
     create_query=SqlQueries.create_rides,
