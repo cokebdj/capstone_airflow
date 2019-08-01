@@ -62,7 +62,7 @@ stage_bikes_raw_to_redshift = StageToRedshiftOperator(
     s3_secret_access_key=AWS_SECRET,
     region=region,
     separator=',',
-    create_query= SqlQueries.create_staging_songs
+    create_query= SqlQueries.create_staging_bikes
 )
 
 wait_operator = DummyOperator(task_id='waiting_until_completion',  dag=dag)
