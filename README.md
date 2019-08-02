@@ -18,7 +18,7 @@ Explain what you plan to do in the project in more detail. What data do you use?
 The aim of the project is to process data from a S3 bucket in csv format into tables in Redshift. This tables could be useful for the operation team of the company that demands this system. Examples of case uses are defined in the appropriate section.
 
 Technologies that are involved in this project are:
-* Amazon S3: storage system from AWS
+* Amazon S3: storage system from AWS.
 * Airflow: orchestrator of ETL processes.
 * Redshift: distributed SQL database from AWS.
 
@@ -31,10 +31,14 @@ Describe the data sets you're using. Where did it come from? What type of inform
 
 ### Step 2: Explore and Assess the Data
 #### Explore the Data 
-Identify data quality issues, like missing values, duplicate data, etc.
+
+Data is provided in plain csv files. In order to ease ingestion and extract valuable data afterwards, two staging tables are crated only with type definition for each column.
+
 
 #### Cleaning Steps
 Document steps necessary to clean the data
+* Rides table: since all fields come with double quote sign ("), it must be removed before processing. Afterwards, every fields is casted to the proper type: integers or timestamps.
+* Weather table: every field is casted to the proper type: floats or timestamps.
 
 ### Step 3: Define the Data Model
 #### 3.1 Conceptual Data Model
@@ -58,10 +62,20 @@ Run Quality Checks
 #### 4.3 Data dictionary 
 Create a data dictionary for your data model. For each field, provide a brief description of what the data is and where it came from. You can include the data dictionary in the notebook or in a separate file.
 
-#### Step 5: Complete Project Write Up
+### Step 5: Complete Project Write Up
 * Clearly state the rationale for the choice of tools and technologies for the project.
 * Propose how often the data should be updated and why.
 * Write a description of how you would approach the problem differently under the following scenarios:
  * The data was increased by 100x.
  * The data populates a dashboard that must be updated on a daily basis by 7am every day.
  * The database needed to be accessed by 100+ people.
+
+
+
+ ![DAG](https://github.com/cokebdj/capstone_airflow/tree/master/images/DAG.PNG)
+ 
+
+ ![gant](https://github.com/cokebdj/capstone_airflow/tree/master/images/gant.PNG)
+
+
+ ![tree](https://github.com/cokebdj/capstone_airflow/tree/master/images/tree.PNG)
