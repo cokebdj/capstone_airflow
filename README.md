@@ -72,10 +72,10 @@ Create a data dictionary for your data model. For each field, provide a brief de
 
 
 
- ![DAG](../images/DAG.PNG)
+ ![DAG](images/DAG.PNG)
 
 
- ![gant](../images/gant.PNG)
+ ![gant](images/gant.PNG)
 
 
- ![tree](../images/tree.PNG)
+ ![tree](images/tree.PNG)
