@@ -1,8 +1,7 @@
 # Project Title
-### Data Engineering Capstone Project
+### Data Engineering Capstone Project: Data Processing with Airflow
 
 #### Project Summary
---describe your project at a high level--
 
 The project follows the follow steps:
 * Step 1: Scope the Project and Gather Data
@@ -16,8 +15,19 @@ The project follows the follow steps:
 #### Scope 
 Explain what you plan to do in the project in more detail. What data do you use? What is your end solution look like? What tools did you use? etc>
 
+The aim of the project is to process data from a S3 bucket in csv format into tables in Redshift. This tables could be useful for the operation team of the company that demands this system. Examples of case uses are defined in the appropriate section.
+
+Technologies that are involved in this project are:
+* Amazon S3: storage system from AWS
+* Airflow: orchestrator of ETL processes.
+* Redshift: distributed SQL database from AWS.
+
+
 #### Describe and Gather Data 
 Describe the data sets you're using. Where did it come from? What type of information is included?
+
+* Rides data: collected from rides in Capital Bikeshare System (Washington DC). Available in their [S3 bucket](https://s3.amazonaws.com/capitalbikeshare-data/index.html).
+* Weather data: collected from meteo station at Reagan Airport (Washington DC). Provided by [NOAA](https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets).
 
 ### Step 2: Explore and Assess the Data
 #### Explore the Data 
