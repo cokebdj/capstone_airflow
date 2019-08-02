@@ -42,40 +42,69 @@ Document steps necessary to clean the data
 
 ### Step 3: Define the Data Model
 #### 3.1 Conceptual Data Model
-Map out the conceptual data model and explain why you chose that model
+The aim of the whole pipeline is to provide the customer with three tables:
+* Rides table: contains only start and end points id, start and end time of the rides and bike id.
+* Stations table: contains a relation between stations id and names.
+* Weather table: contains timestamp of measurement, wind speed, precipitation and visibility.
+
 
 #### 3.2 Mapping Out Data Pipelines
-List the steps necessary to pipeline the data into the chosen data model
+Needed steps in the airflow pipline are provided in the next image:
+
+ ![DAG](images/DAG.PNG)
+
 
 ### Step 4: Run Pipelines to Model the Data 
 #### 4.1 Create the data model
-Build the data pipelines to create the data model.
+ Tasks and relations among them are described in the next image:
 
-#### 4.2 Data Quality Checks
-Explain the data quality checks you'll perform to ensure the pipeline ran as expected. These could include:
- * Integrity constraints on the relational database (e.g., unique key, data type, etc.)
- * Unit tests for the scripts to ensure they are doing the right thing
- * Source/Count checks to ensure completeness
- 
-Run Quality Checks
+ ![tree](images/tree.PNG)
 
-#### 4.3 Data dictionary 
-Create a data dictionary for your data model. For each field, provide a brief description of what the data is and where it came from. You can include the data dictionary in the notebook or in a separate file.
+Queries that defines the logic behind each task are contained in [helpers module](https://github.com/cokebdj/capstone_airflow/blob/master/plugins/helpers/sql_queries.py)
 
-### Step 5: Complete Project Write Up
-* Clearly state the rationale for the choice of tools and technologies for the project.
-* Propose how often the data should be updated and why.
-* Write a description of how you would approach the problem differently under the following scenarios:
- * The data was increased by 100x.
- * The data populates a dashboard that must be updated on a daily basis by 7am every day.
- * The database needed to be accessed by 100+ people.
-
-
-
- ![DAG](images/DAG.PNG)
+A chart that shows a Gant diagram of how and when tasks have been executed is provided in the next image:
 
 
  ![gant](images/gant.PNG)
 
 
- ![tree](images/tree.PNG)
+#### 4.2 Data Quality Checks
+Quality checks are included in the final task within the DAG. These checks are row counts in order to determine that there are no empty tables.
+
+#### 4.3 Data dictionary 
+
+* Rides table:
+    * duration (int4): duration in secods of trip.
+    * start_date (timsetamp): timestamp for ride start.
+    * end_date (timsetamp): timestamp for ride end.
+    * start_station_number (int4): station id for ride start.
+    * end_station_number (int4): station id for ride end.
+    * bike_number (varchar): id for bike.
+
+* Stations table:
+    * station_number (int4): station id.
+    * station_name (varchar): station name.
+
+* Weather table:
+    * date (timsetamp): timestamp of measurement.
+    * precipitation (numeric): last hour precipitation index.
+    * visibility (numeric): current visibility index.
+    * wind_speed (numeric): current wind speed in knots.
+
+
+
+### Step 5: Complete Project Write Up
+
+#### 5.1 Use cases
+* Provisioning for stations: by analyzing how traffic varies for each station (peak and valley hours), dimension the amount of bikes per station in order to improve quality of service.
+* Provisioning for public transport: by analyzing how traffic varies regarding weather condition it would be possible to share data with other public transportation systems in order to efficiently assign resources for crowded routes.
+* Predictive maintenance: by analyzing the time a bike has been used, prevent failure before happening.
+
+
+#### 5.2 Update frequency
+Since data is updated monthly, a higher frequency could not be provided.
+
+
+#### 5.3 Rationale
+
+Airflow has been selected for this project since it provides an easy and flexible interface to manage pipelines. In case different frecuencies for updating data are required, with a single parameter it is posible to modify the whole process. 
