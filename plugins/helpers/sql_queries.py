@@ -12,12 +12,12 @@ class SqlQueries:
                                 );  """)
 
     create_staging_bikes = ("""  CREATE TABLE IF NOT EXISTS public.staging_bikes (
-                                        Duration                    int4,
+                                        Duration                    varchar(256),
                                         "Start date"                varchar(256),
                                         "End date"                  varchar(256),
-                                        "Start station number"      int4,
+                                        "Start station number"      varchar(256),
                                         "Start station"             varchar(256),
-                                        "End station number"        int4,
+                                        "End station number"        varchar(256),
                                         "End station"               varchar(256),
                                         "Bike number"               varchar(256),
                                         "Member type"               varchar(256)
@@ -33,12 +33,12 @@ class SqlQueries:
     );  """)
 
     rides_table_insert = ("""SELECT 
-                            Duration as duration, 
-                            "Start date" as start_date,
-                            "End date" as end_date,
-                            "Start station number" as start_station_number,
-                            "End station number" as end_station_number,
-                            "Bike number" as bike_number
+                            trim('"' FROM "Duration")::int4 as duration, 
+                            to_timestamp(trim('"' FROM "Start date"),'YYYY-MM-DD HH:MI:SS') as start_date,
+                            to_timestamp(trim('"' FROM "End date"),'YYYY-MM-DD HH:MI:SS') as end_date,
+                            trim('"' FROM "Start station number")::int4 as start_station_number,
+                            trim('"' FROM "End station number")::int4 as end_station_number,
+                            trim('"' FROM "Bike number") as bike_number
                             FROM staging_bikes
                             WHERE 
                             "Start date" IS NOT NULL AND
@@ -52,8 +52,9 @@ class SqlQueries:
     );  """)
 
     stations_table_insert = ("""SELECT 
-                                DISTINCT "Start station number" as station_number,
-                                         "Start station" AS station_name
+                                DISTINCT 
+                                trim('"' FROM "Start station number")::int4 as station_number,
+                                trim('"' FROM "Start station") AS station_name
                                 FROM staging_bikes
                                 WHERE
                                 "Start station number" IS NOT NULL AND
@@ -68,14 +69,9 @@ class SqlQueries:
     );  """)
 
     weather_table_insert = ("""SELECT 
-                                Date AS date,
+                                to_timestamp(Date,'YYYY-MM-DD HH:MI:SS') AS date,
                                 HourlyPrecipitation AS precipitation,
                                 HourlyVisibility AS visibility,
                                 HourlyWindSpeed AS wind_speed
                                 FROM staging_weather
                                 WHERE Date IS NOT NULL""")
-
-# TODO: transform strings to timestamp
-# TODO: select maximum from weather to treat zeros (not so interested in accuracy but in detecting bad weather)
-# TODO: hourly windows for weather
-# TODO?: table with aggregations of travels by hour and weather??

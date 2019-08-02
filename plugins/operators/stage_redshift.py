@@ -16,7 +16,7 @@ class StageToRedshiftOperator(BaseOperator):
                  s3_secret_access_key="",
                  region="",
                  create_query="",
-                 delimeter="",
+                 delimiter=",",
                  *args, **kwargs):
         
         super(StageToRedshiftOperator, self).__init__(*args, **kwargs)
@@ -28,7 +28,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.s3_access_key_id = s3_access_key_id
         self.s3_secret_access_key = s3_secret_access_key
         self.region = region
-        self.delimeter = delimeter 
+        self.delimiter = delimiter 
         self.create_query = create_query
 
         
@@ -44,12 +44,10 @@ class StageToRedshiftOperator(BaseOperator):
                                FROM 's3://{self.s3_bucket+'/'+self.s3_key}'
                                ACCESS_KEY_ID '{self.s3_access_key_id}'
                                SECRET_ACCESS_KEY '{self.s3_secret_access_key}'
-                               DELIMETER '{self.delimeter}'
-                               REGION '{self.region}';
+                               DELIMITER '{self.delimiter}'
+                               REGION '{self.region}'
+                               IGNOREHEADER 1;
                                """
         
         self.hook.run(copy_query_statement)
         self.log.info(f'Table {self.table} filled.')
-
-
-

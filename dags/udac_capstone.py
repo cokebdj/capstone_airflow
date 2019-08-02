@@ -28,7 +28,7 @@ default_args = {
     'start_date': datetime(2019, 1, 12),
 }
 
-dag = DAG('udacity_capstone_project',
+dag = DAG('udacity_capstone_project_005',
           catchup=False,
           default_args=default_args,
           description='Load and transform data in Redshift with Airflow',
@@ -47,7 +47,7 @@ stage_weather_raw_to_redshift = StageToRedshiftOperator(
     s3_access_key_id=AWS_KEY,
     s3_secret_access_key=AWS_SECRET,
     region=region,
-    separator=',',
+    delimiter=',',
     create_query= SqlQueries.create_staging_weather
 )
 
@@ -61,7 +61,7 @@ stage_bikes_raw_to_redshift = StageToRedshiftOperator(
     s3_access_key_id=AWS_KEY,
     s3_secret_access_key=AWS_SECRET,
     region=region,
-    separator=',',
+    delimiter=',',
     create_query= SqlQueries.create_staging_bikes
 )
 

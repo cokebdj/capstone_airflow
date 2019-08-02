@@ -20,11 +20,11 @@ class DataQualityOperator(BaseOperator):
         self.hook = PostgresHook(postgres_conn_id=self.redshift_conn_id)
         
         for table in self.tables:
-            self.log.info(f'Query for table {self.table}.')
+            self.log.info(f'Query for table {table}.')
             query = f"""  SELECT COUNT(*) FROM {table};  """
             records = self.hook.get_records(query)
             if records is None or len(records[0])<1:
-                self.log.error(f'No records in table {self.table}.')
+                self.log.error(f'No records in table {table}.')
             else:
-                self.log.info(f'Total of {records[0][0]} records in table {self.table}.')
+                self.log.info(f'Total of {records[0][0]} records in table {table}.')
                 
