@@ -72,10 +72,10 @@ Create a data dictionary for your data model. For each field, provide a brief de
 
 
 
- ![DAG](https://github.com/cokebdj/capstone_airflow/tree/master/images/DAG.PNG)
- 
-
- ![gant](https://github.com/cokebdj/capstone_airflow/tree/master/images/gant.PNG)
+ ![DAG](../images/DAG.PNG)
 
 
- ![tree](https://github.com/cokebdj/capstone_airflow/tree/master/images/tree.PNG)
+ ![gant](../images/gant.PNG)
+
+
+ ![tree](../images/tree.PNG)
